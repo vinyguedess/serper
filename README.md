@@ -9,7 +9,9 @@ App responsible for returning Google, Bing and other SERPs term's search results
 ```
 
 ## Testing
-Will be implemented
+```bash
+    composer run test
+```
 
 ## Usage
 * **GET** /search
