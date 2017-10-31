@@ -14,14 +14,20 @@ class AppController
 
     public function indexAction()
     {
-        return "<h1>Bem findo ao SERPer</h1>";
+        $composer = json_decode(file_get_contents(__DIR__ . '/../../composer.json'), true);
+
+        return new JsonResponse([
+            'name' => 'SERPer',
+            'description' => $composer['description'],
+            'version' => $composer['version']
+        ]);
     }
 
     public function searchAction(Request $request)
     {
         if (is_null($request->get('term')))
             return new JsonResponse([
-                'status' => true,
+                'status' => false,
                 'message' => ['You must defined a term parameter']
             ], JsonResponse::HTTP_BAD_REQUEST);
     
@@ -29,7 +35,7 @@ class AppController
     
         return new JsonResponse([
             'status' => true,
-            'data' => $results
+            'results' => $results
         ], Response::HTTP_OK);
     }
 
