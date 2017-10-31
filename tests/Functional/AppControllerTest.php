@@ -38,7 +38,7 @@ class SERPGoogleTest extends WebTestCase
             'Content-type' => 'application/json'
         ]);
 
-        $response = json_decode($client->getResponse()->getContent(), true);
+        $response = $client->getResponse()->getContent();
         var_dump($response);
 
         $this->assertEquals($client->getResponse()->getStatusCode(), 200);
