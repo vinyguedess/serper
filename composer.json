@@ -1,0 +1,19 @@
+{
+    "name": "vinyguedess/serper",
+    "description": "Spider through SERPs checking results",
+    "version": "1.0.0",
+    
+    "autoload": {
+        "psr-4": {
+            "SERPer\\": "app/"
+        }
+    },
+    "require": {
+        "silex/silex": "^2.2",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+
+    "scripts": {
+        
+    }
+}
