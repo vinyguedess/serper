@@ -9,7 +9,7 @@ use GuzzleHttp\Client;
 class SERPGoogle
 {
 
-    private static $googleSearchUrl = 'http://google.com/search?q=_TERM_&num=_NUM_';
+    private static $googleSearchUrl = 'https://www.google.com/search?q=_TERM_&num=_NUM_&gws_rd=cr&dcr=0';
     private static $numberOfResults = 100;
     private static $userAgents = [
         'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0',
@@ -41,7 +41,7 @@ class SERPGoogle
             preg_match('/\<span\sclass\=\"st\"\>(.*)/', $matchedResult, $matchedDescription);
 
             $results[] = [
-                'url' => !empty($matchedUrl) ? strip_tags($matchedUrl[1]) : null,
+                'url' => !empty($matchedUrl) ? strip_tags(utf8_encode($matchedUrl[1])) : null,
                 'title' => !empty($matchedTitle) ? strip_tags(utf8_encode($matchedTitle[2])) : null,
                 'description' => !empty($matchedDescription) ? strip_tags(utf8_encode($matchedDescription[1])) : null
             ];
@@ -56,6 +56,7 @@ class SERPGoogle
         $response = $client->request('GET', str_replace([
             '_TERM_', '_NUM_'
         ], [ $term, self::$numberOfResults ], self::$googleSearchUrl), [
+            'Accept-Encoding' => 'gzip, deflate, br',
             'User-Agent' => self::getRandomUserAgent(),
             'timeout' => 5000
         ]);
@@ -68,7 +69,7 @@ class SERPGoogle
 
     public static function getRandomUserAgent()
     {
-        $max = count(self::$userAgents);
+        $max = count(self::$userAgents) - 1;
         return self::$userAgents[rand(0, $max)];
     }
 

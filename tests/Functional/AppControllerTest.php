@@ -34,15 +34,12 @@ class SERPGoogleTest extends WebTestCase
     public function testTermsSearch()
     {
         $client = $this->createClient();
-        $client->request('GET', '/search?term=Aluguel de salão para casamento', [
-            'Content-type' => 'application/json'
-        ]);
+        $client->request('GET', '/search?term=Aluguel de salão para casamento');
 
         $response = json_decode($client->getResponse()->getContent(), true);
-        var_dump($response);
 
         $this->assertEquals($client->getResponse()->getStatusCode(), 200);
-        $this->assertArrayHasKey('data', $response);
+        $this->assertArrayHasKey('status', $response);
         $this->assertArrayHasKey('results', $response);
     }
 
