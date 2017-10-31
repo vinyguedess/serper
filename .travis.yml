@@ -2,5 +2,8 @@ language: php
 php:
     - '7.1'
 
+install:
+  - composer install
+
 script:
-    - composer run test
+  - composer run test
