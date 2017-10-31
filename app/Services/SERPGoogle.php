@@ -68,7 +68,7 @@ class SERPGoogle
 
     public static function getRandomUserAgent()
     {
-        $max = count(self::$userAgents);
+        $max = count(self::$userAgents) - 1;
         return self::$userAgents[rand(0, $max)];
     }
 
