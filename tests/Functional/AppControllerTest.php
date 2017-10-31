@@ -34,7 +34,7 @@ class SERPGoogleTest extends WebTestCase
     public function testTermsSearch()
     {
         $client = $this->createClient();
-        $client->request('GET', '/search?term=Aluguel de salão para casamento', [
+        $client->request('GET', '/search?term=aluguel de veiculos em são paulo', [
             'Content-type' => 'application/json'
         ]);
 
