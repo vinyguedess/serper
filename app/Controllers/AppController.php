@@ -3,7 +3,8 @@
 namespace SERPer\Controllers;
 
 
-use SERPer\Services\SERPGoogle;
+use SERPer\Services\CacheService;
+use SERPer\Services\SERPGoogleService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,21 +31,29 @@ class AppController
                 'status' => false,
                 'message' => ['You must defined a term parameter']
             ], JsonResponse::HTTP_BAD_REQUEST);
-    
-	$results = [
-	    'status' => true,
-	    'results' => SERPGoogle::get($request->get('term'))
-    	];
-	if (!is_null($request->get('domain'))) {
-	    foreach ($results['results'] as $result) {
-		if (!isset($result['info']) && strpos($result['url'], $request->get('domain')) >= 0) {
-		    $results['info'] = [
-			'domain' => $request->get('domain'),
-			'position' => $result['position']
-		    ];
-		}
-	    }
-	}
+            
+        $term = strtolower($request->get('term'));
+
+        $listOfDomains = CacheService::get($term);
+        if (is_null($listOfDomains)) {
+            $listOfDomains = SERPGoogleService::get($term);
+            CacheService::set($term, json_encode($listOfDomains));
+        } else
+            $listOfDomains = json_decode($listOfDomains, true);
+
+        $results = ['status' => true, 'results' => $listOfDomains];
+
+        $domain = $request->get('domain');
+        if (!is_null($domain)) {
+            foreach ($results['results'] as $result) {
+                if (!isset($result['info']) && strpos($result['url'], $domain)) {
+                    $results['info'] = [
+                        'domain' => $domain,
+                        'position' => $result['position']
+                    ];
+                }
+            }
+        }
 
         return new JsonResponse($results, Response::HTTP_OK);
     }

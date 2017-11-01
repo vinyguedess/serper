@@ -6,7 +6,7 @@ namespace SERPer\Services;
 use GuzzleHttp\Client;
 
 
-class SERPGoogle
+class SERPGoogleService
 {
 
     private static $googleSearchUrl = 'https://www.google.com/search?q=_TERM_&num=_NUM_&gws_rd=cr&dcr=0';

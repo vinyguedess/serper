@@ -1,5 +1,6 @@
 # App files and folders
 /coverage
+/storage/*.cache
 /vendor
 
 # OS and IDE files and folders
