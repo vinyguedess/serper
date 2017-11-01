@@ -36,7 +36,7 @@ class AppController
 	    'results' => SERPGoogle::get($request->get('term'))
     	];
 	if (!is_null($request->get('domain'))) {
-	    foreach ($results['result'] as $result) {
+	    foreach ($results['results'] as $result) {
 		if (!isset($results['info']) && strpos($result['url'], $request->get('domain')) >= 0) {
 		    $results['info'] = [
 			'domain' => $request->get('domain'),
