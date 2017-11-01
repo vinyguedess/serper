@@ -37,10 +37,10 @@ class AppController
     	];
 	if (!is_null($request->get('domain'))) {
 	    foreach ($results['results'] as $result) {
-		if (!isset($results['info']) && strpos($result['url'], $request->get('domain')) >= 0) {
+		if (!isset($result['info']) && strpos($result['url'], $request->get('domain')) >= 0) {
 		    $results['info'] = [
 			'domain' => $request->get('domain'),
-			'position' => $results['position']
+			'position' => $result['position']
 		    ];
 		}
 	    }
