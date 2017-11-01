@@ -14,10 +14,25 @@ App responsible for returning Google, Bing and other SERPs term's search results
 ```
 
 ## Usage
+* **GET** /
+    * Homepage with information about application
 * **GET** /search
-    * URL: **term** variable defines term to be searched
+    * **term** variable defines term to be searched
+    * **domain** variable defines which domain should bring further information
 
 ## Implementation
+
+### PHP
+```php
+    $word = "Palavra a ser pesquisa";
+
+    $ch = curl_init("http://serper.herokuapp.com?term={$word}");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    var_dump($response);
+```
 
 ### Typescript/Javascript
 ```javascript
