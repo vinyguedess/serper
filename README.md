@@ -24,9 +24,10 @@ App responsible for returning Google, Bing and other SERPs term's search results
 
 ### PHP
 ```php
-    $word = "Palavra a ser pesquisa";
+    $word = str_replace(' ', '+', "Palavra a ser pesquisa");
 
-    $ch = curl_init("http://serper.herokuapp.com?term={$word}");
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "serper.herokuapp.com/search?term={$word}");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     $response = curl_exec($ch);
     curl_close($ch);
