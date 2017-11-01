@@ -3,11 +3,17 @@
 namespace SERPer\Test\Functional;
 
 
+use SERPer\Services\CacheService;
 use Silex\WebTestCase;
 
 
 class SERPGoogleTest extends WebTestCase
 {
+
+    public static function setUpBeforeClass()
+    {
+        CacheService::delete('Aluguel de carros');
+    }
 
     public function createApplication()
     {
@@ -46,14 +52,25 @@ class SERPGoogleTest extends WebTestCase
     public function testTermsSearchWithDomainInformation()
     {
         $client = $this->createClient();
-	$client->request('GET', '/search?term=Aluguel de carros&domain=localiza.com');
+        $client->request('GET', '/search?term=Aluguel de carros&domain=localiza.com');
 
-	$response = json_decode($client->getResponse()->getContent(), true);
+        $response = json_decode($client->getResponse()->getContent(), true);
 
-	$this->assertEquals($client->getResponse()->getStatusCode(), 200);
-	$this->assertArrayHasKey('status', $response);
-	$this->assertArrayHasKey('results', $response);
-	$this->assertArrayHasKey('info', $response);
+        $this->assertEquals($client->getResponse()->getStatusCode(), 200);
+        $this->assertArrayHasKey('status', $response);
+        $this->assertArrayHasKey('results', $response);
+        $this->assertArrayHasKey('info', $response);
+    }
+
+    public function testGettingResultAlreadyCached()
+    {
+        $client = $this->createClient();
+        $client->request('GET', '/search?term=Aluguel de carros&domain=localiza.com');
+
+        $response = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertEquals($client->getResponse()->getStatusCode(), 200);
+        $this->assertArrayHasKey('status', $response);
     }
 
     public function testPresentingErrorWhenTermNotInformed()
