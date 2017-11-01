@@ -46,7 +46,7 @@ class SERPGoogleTest extends WebTestCase
     public function testTermsSearchWithDomainInformation()
     {
         $client = $this->createClient();
-	$client->request('GET', '/search?term=Aluguel de carros&domainlocaliza.com');
+	$client->request('GET', '/search?term=Aluguel de carros&domain=localiza.com');
 
 	$response = json_decode($client->getResponse()->getContent(), true);
 
