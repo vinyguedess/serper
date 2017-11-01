@@ -1,18 +1,18 @@
 <?php
 
-namespace SERPer\Test\Unit\Services;
+namespace SERPer\Test\Unit\Services\SERP;
 
 
 use PHPUnit\Framework\TestCase;
-use SERPer\Services\SERPGoogleService;
+use SERPer\Services\SERP\GoogleService;
 
 
-class SERPGoogleServiceTest extends TestCase
+class GoogleServiceTest extends TestCase
 {
 
     public function testGettingResultsFromGoogle()
     {
-        $results = SERPGoogleService::get('aluguel de veiculos em são paulo');
+        $results = GoogleService::get('aluguel de veiculos em são paulo');
 
         $this->assertArrayHasKey('title', $results[0]);
         $this->assertArrayHasKey('url', $results[0]);

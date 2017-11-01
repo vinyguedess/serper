@@ -1,12 +1,12 @@
 <?php 
 
-namespace SERPer\Services;
+namespace SERPer\Services\SERP;
 
 
 use GuzzleHttp\Client;
 
 
-class SERPGoogleService
+class GoogleService implements ISERPService
 {
 
     private static $googleSearchUrl = 'https://www.google.com/search?q=_TERM_&num=_NUM_&gws_rd=cr&dcr=0';

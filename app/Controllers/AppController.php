@@ -4,7 +4,7 @@ namespace SERPer\Controllers;
 
 
 use SERPer\Services\CacheService;
-use SERPer\Services\SERPGoogleService;
+use SERPer\Services\SERP\GoogleService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +36,7 @@ class AppController
 
         $listOfDomains = CacheService::get($term);
         if (is_null($listOfDomains)) {
-            $listOfDomains = SERPGoogleService::get($term);
+            $listOfDomains = GoogleService::get($term);
             CacheService::set($term, json_encode($listOfDomains));
         } else
             $listOfDomains = json_decode($listOfDomains, true);
