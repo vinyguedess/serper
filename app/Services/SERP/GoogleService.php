@@ -8,8 +8,6 @@ class GoogleService extends SERPService
     
     protected static $searchUrl = 'https://www.google.com/search?q=_TERM_&num=_NUM_&gws_rd=cr&dcr=0';
 
-    protected static $numberOfResults = 5;
-
     public static function parseResults(string $googleHtmlContent):array
     {
         preg_match_all('/\<div\sclass\=\"g\"(.*)/', $googleHtmlContent, $googleResultsMatched);
