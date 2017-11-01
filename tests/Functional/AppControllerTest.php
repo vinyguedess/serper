@@ -43,6 +43,19 @@ class SERPGoogleTest extends WebTestCase
         $this->assertArrayHasKey('results', $response);
     }
 
+    public function testTermsSearchWithDomainInformation()
+    {
+        $client = $this->createClient();
+	$client->request('GET', '/search?term=Aluguel de carros&domainlocaliza.com');
+
+	$response = json_decode($client->getResponse()->getContent(), true);
+
+	$this->assertEquals($client->getResponse()->getStatusCode(), 200);
+	$this->assertArrayHasKey('status', $response);
+	$this->assertArrayHasKey('results', $response);
+	$this->assertArrayHasKey('info', $response);
+    }
+
     public function testPresentingErrorWhenTermNotInformed()
     {
         $client = $this->createClient();
