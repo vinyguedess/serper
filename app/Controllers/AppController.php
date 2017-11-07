@@ -45,7 +45,7 @@ class AppController
         $results = ['status' => true, 'results' => $listOfDomains];
 
         $domain = $request->get('domain');
-        if (!is_null($domain)) {
+        if (!is_null($domain) && !is_null($results['results'])) {
             $results['info'] = [
                 'domain' => $domain,
                 'position' => ['page' => null, 'position' => null, 'general', 101]
