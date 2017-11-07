@@ -19,4 +19,15 @@ class GoogleServiceTest extends TestCase
         $this->assertArrayHasKey('description', $results[0]);
     }
 
+    public function testGettingResultsForcingRegion()
+    {
+        $results = GoogleService::get('aluguel de veiculos', 'Brazil,São Paulo,São Paulo');
+        
+        file_put_contents('xxx.json', json_encode($results));
+
+        $this->assertArrayHasKey('title', $results[0]);
+        $this->assertArrayHasKey('url', $results[0]);
+        $this->assertArrayHasKey('description', $results[0]);
+    }
+
 }

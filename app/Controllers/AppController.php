@@ -33,8 +33,9 @@ class AppController
             ], JsonResponse::HTTP_BAD_REQUEST);
             
         $term = strtolower($request->get('term'));
+        $region = $request->get('region', 'Brazil,São Paulo,São Paulo');
 
-        $listOfDomains = CacheService::get($term);
+        $listOfDomains = CacheService::get($term, $region);
         if (is_null($listOfDomains)) {
             $listOfDomains = GoogleService::get($term);
             CacheService::set($term, json_encode($listOfDomains));
