@@ -21,12 +21,9 @@ abstract class SERPService implements ISERPService
         'Googlebot/2.1 (+http://www.google.com/bot.html)'
     ];
 
-    public static function get(string $term, string $location = null):array
+    public static function get(string $term):array
     {
-        if (!is_null($location))
-            $location = static::parseLocation($location);
-
-        $googleHtmlContent = self::makeRequest($term, $location);
+        $googleHtmlContent = self::makeRequest($term);
         if (is_null($googleHtmlContent))
             return [];
 
@@ -35,13 +32,9 @@ abstract class SERPService implements ISERPService
         return $results;
     }
 
-    protected static function makeRequest($term, $location)
+    protected static function makeRequest($term)
     {
-        $url = str_replace(
-            [ '_TERM_', '_NUM_', '_LOC_' ], 
-            [ $term, static::$numberOfResults, $location ], 
-            static::$searchUrl
-        );
+        $url = str_replace(['_TERM_', '_NUM_'], [ $term, static::$numberOfResults ], static::$searchUrl);
         
         $client = new Client();
         $response = $client->request('GET', $url, [

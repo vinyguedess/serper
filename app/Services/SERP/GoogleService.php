@@ -6,7 +6,7 @@ namespace SERPer\Services\SERP;
 class GoogleService extends SERPService
 {
     
-    protected static $searchUrl = 'https://www.google.com/search?q=_TERM_&num=_NUM_&uule=_LOC_gws_rd=cr&dcr=0';
+    protected static $searchUrl = 'https://www.google.com/search?q=_TERM_&num=_NUM_&gws_rd=cr&dcr=0';
 
     public static function parseResults(string $googleHtmlContent):array
     {
@@ -31,13 +31,6 @@ class GoogleService extends SERPService
         }
 
         return $results;
-    }
-
-    public static function parseLocation(string $location):string
-    {
-        $location = base64_encode($location);
-        
-        return "w+CAIQICIf{$location}";
     }
 
 }

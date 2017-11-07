@@ -33,9 +33,8 @@ class AppController
             ], JsonResponse::HTTP_BAD_REQUEST);
             
         $term = strtolower($request->get('term'));
-        $region = $request->get('region', 'Brazil,São Paulo,São Paulo');
 
-        $listOfDomains = CacheService::get($term, $region);
+        $listOfDomains = CacheService::get($term);
         if (is_null($listOfDomains)) {
             $listOfDomains = GoogleService::get($term);
             CacheService::set($term, json_encode($listOfDomains));
@@ -50,12 +49,11 @@ class AppController
                 'domain' => $domain,
                 'position' => ['page' => null, 'position' => null, 'general', 101]
             ];
-            
-            if (!is_null($results['results']))
-                foreach ($results['results'] as $result) {
-                    if (!isset($result['info']) && strpos($result['url'], $domain))
-                        $results['info']['position'] = $result['position'];
-                }
+
+            foreach ($results['results'] as $result) {
+                if (!isset($result['info']) && strpos($result['url'], $domain))
+                    $results['info']['position'] = $result['position'];
+            }
         }
 
         return new JsonResponse($results, Response::HTTP_OK);
