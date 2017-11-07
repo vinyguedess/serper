@@ -45,16 +45,17 @@ class AppController
         $results = ['status' => true, 'results' => $listOfDomains];
 
         $domain = $request->get('domain');
-        if (!is_null($domain) && !is_null($results['results'])) {
+        if (!is_null($domain)) {
             $results['info'] = [
                 'domain' => $domain,
                 'position' => ['page' => null, 'position' => null, 'general', 101]
             ];
-
-            foreach ($results['results'] as $result) {
-                if (!isset($result['info']) && strpos($result['url'], $domain))
-                    $results['info']['position'] = $result['position'];
-            }
+            
+            if (!is_null($results['results']))
+                foreach ($results['results'] as $result) {
+                    if (!isset($result['info']) && strpos($result['url'], $domain))
+                        $results['info']['position'] = $result['position'];
+                }
         }
 
         return new JsonResponse($results, Response::HTTP_OK);
