@@ -1,0 +1,11 @@
+# App files and folders
+/.nyc_output
+/app
+/coverage
+/node_modules
+/yarn-error.log
+
+# OS files and folders
+/.idea
+/.vscode
+/nbproject
